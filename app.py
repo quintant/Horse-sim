@@ -27,7 +27,7 @@ class App:
         self._display_surf = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.size = self.width, self.height = pygame.display.get_surface().get_size()
         self._running = True
-        pygame.display.set_caption("Horse Betting Sim")
+        pygame.display.set_caption("Coomer Betting Sim")
         self.font = pygame.font.Font("freesansbold.ttf", 32)
         self.get_num_horses()
         self.init_horses()
@@ -81,7 +81,7 @@ class App:
     def get_num_horses(self):
         def disp(n):
             self._display_surf.fill(black)
-            text = self.font.render("How many horses?", True, green, blue)
+            text = self.font.render("How many coomers?", True, green, blue)
             textRect = text.get_rect()
             textRect.center = (self.width // 2, self.height // 2)
             self._display_surf.blit(text, textRect)
