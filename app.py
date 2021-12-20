@@ -19,7 +19,7 @@ class App:
         self.horses = []
         self.div = 100
         self.playing = False
-        # self.bg = pygame.image.load("bg.jpg")
+        self.bg = pygame.image.load("bg.jpg")
 
     def on_init(self):
         pygame.init()
@@ -57,8 +57,8 @@ class App:
                 horse.step()
 
     def on_render(self):
-        self._display_surf.fill(black)
-        # self._display_surf.blit(self.bg, (0,0))
+        # self._display_surf.fill(black)
+        self._display_surf.blit(self.bg, (0,0))
         for horse in self.horses:
             horse.blit()
         pygame.display.update()
