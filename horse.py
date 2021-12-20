@@ -7,9 +7,9 @@ class Horse:
     def __init__(self, pos:list, surface) -> None:
         """X/Y pos"""
         self.pos = pos
-        self.init_speed = uniform(.3, .5)
+        self.init_speed = uniform(.35, .45)
         self.stamina = randint(100, 300)
-        self.sprint_multiplier = uniform(3, 5)
+        self.sprint_multiplier = uniform(3, 4)
         self.threshold = 0.8
         self.surface = surface
         self.sprinting = False
