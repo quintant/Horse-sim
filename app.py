@@ -15,6 +15,7 @@ class App:
         self.clock = pygame.time.Clock()
         self.horses = []
         self.div = 100
+        self.playing = False
 
     def on_init(self):
         pygame.init()
@@ -23,15 +24,25 @@ class App:
         pygame.display.set_caption("Horse Betting Sim")
         self.font = pygame.font.Font("freesansbold.ttf", 32)
         self.get_num_horses()
+        self.init_horses()
+    
+    def init_horses(self):
         self.horses = [Horse([0, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
+        self.playing = False
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_RETURN, pygame.K_SPACE):
+                self.playing = True
+            elif event.key == pygame.K_r:
+                self.init_horses()
 
     def on_loop(self):
-        for horse in self.horses:
-            horse.step()
+        if self.playing:
+            for horse in self.horses:
+                horse.step()
 
     def on_render(self):
         self._display_surf.fill(black)
@@ -74,9 +85,10 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self._running = False
+                    return
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
-                        if num.isdigit():
+                        if num.isdigit() and (0 < int(num) < 9):
                             done = True
                             self.num_horses = int(num)
                         else:
