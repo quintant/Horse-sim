@@ -31,7 +31,7 @@ class App:
         self.init_horses()
     
     def init_horses(self):
-        self.horses = [Horse(str(i), [0, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
+        self.horses = [Horse(str(i), [45, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
         self.playing = False
 
     def on_event(self, event):
@@ -39,8 +39,11 @@ class App:
             self._running = False
         elif event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_RETURN, pygame.K_SPACE):
-                self.playing = True
+                self.playing ^= True
             elif event.key == pygame.K_r:
+                self.init_horses()
+            elif event.key == pygame.K_i:
+                self.get_num_horses()
                 self.init_horses()
             elif event.key == pygame.K_ESCAPE:
                 self._running = False
@@ -105,3 +108,4 @@ class App:
                     else:
                         num += event.unicode
             disp(num)
+        

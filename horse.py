@@ -17,7 +17,7 @@ class Horse:
         self.stamina = randint(100, 300)
         self.sprint_multiplier = random.gauss(4, 0.3)
         self.threshold = 0.88
-        self.threshold2 = 1.5
+        self.threshold2 = 5
         self.surface = surface
         self.sprinting = False
         self.sp_cnt = 1
@@ -31,14 +31,20 @@ class Horse:
         self.speed1 = scale(pygame.image.load("coomer.jpg"), (SIXE, SIXE))
         self.speed2 = scale(pygame.image.load("coomer2.gif"), (SIXE, SIXE))
         self.woman = scale(pygame.image.load('woman.jpg'), (SIXE*1.303030303030303,SIXE))
-        self.slow = scale(pygame.image.load("bonk.png"), (SIXE, SIXE))
+        # self.slow = scale(pygame.image.load("bonk.png"), (SIXE, SIXE))
+        self.slow = scale(pygame.image.load("coomer2.gif"), (SIXE, SIXE))
+
+        self.grunt_sound = pygame.mixer.Sound("grunt.mp3")
+        self.kiss_sound = pygame.mixer.Sound("kiss.mp3")
+        self.scream_sound = pygame.mixer.Sound("scream.mp3")
+        self.moan_sound = pygame.mixer.Sound("moan.mp3")
 
     def step(self):
         self.f_num += 1
         if not self.finished:
             if self.sprinting:
-                self.pos[0] += self.init_speed * self.sprint_multiplier / self.sp_cnt
-                self.stamina -= 1 * self.sprint_multiplier
+                self.pos[0] += self.init_speed * self.sprint_multiplier #/ self.sp_cnt
+                self.stamina -= 1*self.sprint_multiplier
             else:
                 self.pos[0] += self.init_speed
                 self.stamina += 1
@@ -46,8 +52,12 @@ class Horse:
                 if x > self.threshold and self.stamina > 600 * self.stam_t_mod:
                     self.sp_cnt += 1
                     self.sprinting = True
+                    pygame.mixer.Sound.play(self.kiss_sound)
+                    pygame.mixer.Sound.play(self.grunt_sound)
+                    # pygame.mixer.Sound.play(self.moan_sound)
                 if x > self.threshold2:
                     self.sp_cnt -= 1 if self.sp_cnt > 1 else 0
+                    pygame.mixer.Sound.play(self.scream_sound)
             if self.stamina < 0:
                 self.sprinting = False
         if self.pos[0] > self.end:
