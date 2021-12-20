@@ -9,17 +9,21 @@ class App:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 1200, 900
+        self.size = None
+        self.width, self.height = None, None
         self.font = None
         self.num_horses = None
         self.clock = pygame.time.Clock()
         self.horses = []
         self.div = 100
         self.playing = False
+        self.bg = pygame.image.load("bg.jpg")
 
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size)
+        # self._display_surf = pygame.display.set_mode(self.size)
+        self._display_surf = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.size = self.width, self.height = pygame.display.get_surface().get_size()
         self._running = True
         pygame.display.set_caption("Horse Betting Sim")
         self.font = pygame.font.Font("freesansbold.ttf", 32)
@@ -27,7 +31,7 @@ class App:
         self.init_horses()
     
     def init_horses(self):
-        self.horses = [Horse([0, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
+        self.horses = [Horse(str(i), [0, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
         self.playing = False
 
     def on_event(self, event):
@@ -38,6 +42,8 @@ class App:
                 self.playing = True
             elif event.key == pygame.K_r:
                 self.init_horses()
+            elif event.key == pygame.K_ESCAPE:
+                self._running = False
 
     def on_loop(self):
         if self.playing:
@@ -45,7 +51,8 @@ class App:
                 horse.step()
 
     def on_render(self):
-        self._display_surf.fill(black)
+        # self._display_surf.fill(black)
+        self._display_surf.blit(self.bg, (0,0))
         for horse in self.horses:
             horse.blit()
         pygame.display.update()
