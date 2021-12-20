@@ -23,7 +23,7 @@ class App:
         pygame.display.set_caption("Horse Betting Sim")
         self.font = pygame.font.Font("freesansbold.ttf", 32)
         self.get_num_horses()
-        self.horses = [Horse([0, 100 + self.div*i], self._display_surf) for i in range(self.num_horses)]
+        self.horses = [Horse([0, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
