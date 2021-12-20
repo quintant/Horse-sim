@@ -1,6 +1,8 @@
+from random import sample
 import pygame
 from colors import *
 from pygame.locals import *
+from constants import coomer_list
 
 from horse import Horse
 
@@ -17,7 +19,7 @@ class App:
         self.horses = []
         self.div = 100
         self.playing = False
-        self.bg = pygame.image.load("bg.jpg")
+        # self.bg = pygame.image.load("bg.jpg")
 
     def on_init(self):
         pygame.init()
@@ -31,7 +33,8 @@ class App:
         self.init_horses()
     
     def init_horses(self):
-        self.horses = [Horse(str(i), [45, 100 + self.div*i], self._display_surf, self.width) for i in range(self.num_horses)]
+        profile = sample(coomer_list, k=self.num_horses)
+        self.horses = [Horse(str(i), [60, 100 + self.div*i], self._display_surf, self.width, profile[i]) for i in range(self.num_horses)]
         self.playing = False
 
     def on_event(self, event):
@@ -54,8 +57,8 @@ class App:
                 horse.step()
 
     def on_render(self):
-        # self._display_surf.fill(black)
-        self._display_surf.blit(self.bg, (0,0))
+        self._display_surf.fill(black)
+        # self._display_surf.blit(self.bg, (0,0))
         for horse in self.horses:
             horse.blit()
         pygame.display.update()
